@@ -1,0 +1,8 @@
+- route:
+    id: sample
+    auto-startup: false
+    from:
+      uri: direct://sample
+      steps:
+      - set-body:
+          simple: ${body}

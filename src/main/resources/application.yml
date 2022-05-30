@@ -1,0 +1,11 @@
+# Apache Camel
+camel:
+  springboot:
+    main-run-controller: true
+    stream-caching-enabled: false
+    jmx-enabled: false
+    dev-console-enabled: true
+    routes-include-pattern: file:src/main/resources/yaml/sample.yaml
+    tracing: true
+    tracing-standby: true
+    backlog-tracing: true
