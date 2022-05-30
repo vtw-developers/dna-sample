@@ -1,0 +1,55 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.0'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.springframework.experimental.aot' version '0.12.0-SNAPSHOT'
+}
+
+group = 'com.vtw.dna'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	maven { url 'https://repo.spring.io/snapshot' }
+	mavenCentral()
+}
+
+dependencyManagement {
+	imports {
+		mavenBom 'org.apache.camel.springboot:camel-spring-boot-dependencies:3.17.0'
+	}
+}
+
+dependencies {
+	implementation 'org.apache.camel:camel-endpointdsl'
+	implementation 'org.apache.camel.springboot:camel-spring-boot-starter'
+	implementation 'org.apache.camel.springboot:camel-kafka-starter'
+	implementation 'org.apache.camel.springboot:camel-jackson-starter'
+	implementation 'org.apache.camel.springboot:camel-file-watch-starter'
+	implementation 'org.apache.camel.springboot:camel-jacksonxml-starter'
+	implementation 'org.apache.camel.springboot:camel-csv-starter'
+	implementation 'org.apache.camel.springboot:camel-sql-starter'
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.apache.camel:camel-yaml-dsl'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.named('bootBuildImage') {
+	builder = 'paketobuildpacks/builder:tiny'
+	environment = ['BP_NATIVE_IMAGE': 'true']
+}
