@@ -27,6 +27,8 @@ dependencyManagement {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.apache.camel:camel-endpointdsl'
 	implementation 'org.apache.camel.springboot:camel-spring-boot-starter'
 	implementation 'org.apache.camel.springboot:camel-kafka-starter'
@@ -35,6 +37,12 @@ dependencies {
 	implementation 'org.apache.camel.springboot:camel-jacksonxml-starter'
 	implementation 'org.apache.camel.springboot:camel-csv-starter'
 	implementation 'org.apache.camel.springboot:camel-sql-starter'
+	implementation 'org.apache.camel.springboot:camel-http-starter'
+	implementation 'org.apache.camel.springboot:camel-stream-starter'
+	implementation 'org.apache.camel.springboot:camel-jdbc-starter'
+	implementation 'org.apache.camel.springboot:camel-git-starter'
+	implementation 'org.apache.camel.springboot:camel-stream-starter'
+	implementation 'org.apache.camel.springboot:camel-http-starter'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.apache.camel:camel-yaml-dsl'
@@ -42,6 +50,8 @@ dependencies {
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

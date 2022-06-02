@@ -1,3 +1,18 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /dna/sample
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://34.64.197.81:5432/portal
+#    url: jdbc:postgresql://34.64.86.103:5432/postgres
+    username: vtw
+    password: vtw123#
+  jpa:
+    open-in-view: false
+
 # Apache Camel
 camel:
   springboot:
@@ -9,3 +24,4 @@ camel:
     tracing: true
     tracing-standby: true
     backlog-tracing: true
+
