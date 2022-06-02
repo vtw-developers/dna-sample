@@ -14,66 +14,62 @@
         - set-header:
             name: person
             simple: ${body}
-        - log: ${header.person[gender]}
+        - process:
+            ref: incomeBracketProcessor
+        - log: ${header.incomeBracket}
         - choice:
             when:
               - simple: ${header.person[gender]} == 'Female'
                 steps:
-                  - process:
-                      ref: incomeBracketProcessor
                   - choice:
                       when:
-                        - simple: ${header.person[gender]} == 'self employment'
+                        - simple: ${header.person[job]} == 'self employment'
                           steps:
-                            - set-body:
+                            - set-header:
+                                name: payment
                                 simple: 지원금A
-                      when:
                         - simple: ${header.incomeBracket} >= 7
                           steps:
-                            - set-body:
+                            - set-header:
+                                name: payment
                                 simple: 지원금B
-                      when:
                         - simple: ${header.incomeBracket} >= 3
                           steps:
-                            - set-body:
+                            - set-header:
+                                name: payment
                                 simple: 지원금C
                       otherwise:
                         steps:
                           - set-body:
                               simple: 지원금 대상 아님
-            when:
               - simple: ${header.person[gender]} == 'Male'
                 steps:
-                  - process:
-                      ref: incomeBracketProcessor
                   - choice:
                       when:
-                        - simple: ${header.person[gender]} == 'self employment'
+                        - simple: ${header.person[job]} == 'self employment'
                           steps:
-                            - set-body:
+                            - set-header:
+                                name: payment
                                 simple: 지원금D
-                      when:
                         - simple: ${header.incomeBracket} >= 7
                           steps:
-                            - set-body:
+                            - set-header:
+                                name: payment
                                 simple: 지원금E
-                      when:
                         - simple: ${header.incomeBracket} >= 3
                           steps:
-                            - set-body:
+                            - set-header:
+                                name: payment
                                 simple: 지원금F
                       otherwise:
                         steps:
-                          - set-body:
+                          - set-header:
+                              name: payment
                               simple: 지원금 대상 아님
-
-
-
-
-
-
-        #        - set-body:
-        #            simple: test
-#      - convertBodyTo:
-#          type: String
-#      - log:
+            otherwise:
+              steps:
+                - set-header:
+                    name: payment
+                    simple: 지원금 대상 아님
+        - process:
+            ref: resultGenerateProcessor

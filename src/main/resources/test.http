@@ -1,0 +1,13 @@
+# 대상아님
+#GET http://127.0.0.1:8090/dna/sample/routes/6402141234567
+
+# 지원금F
+#GET http://127.0.0.1:8090/dna/sample/routes/6211241234567
+
+# 지원금D
+#GET http://127.0.0.1:8090/dna/sample/routes/8910201234567
+
+# 지원금A
+GET http://127.0.0.1:8090/dna/sample/routes/7411242234567
+
+Accept: application/json
