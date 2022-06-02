@@ -7,17 +7,17 @@
       uri: direct://sample
       steps:
         # Camel exchange의 body를 logging
-        - log: ${body}
+        - log: id= ${body}
         # 입력받은 주민등록번호를 body에 넣어서 person 정보를 받아오는 api를 POST로 호출
         # 반환값은 body에 저장 됨
         - to:
             uri: http://127.0.0.1:8090/dna/sample/persons?httpMethod=POST
-        - log: ${body}
+        - log: person= ${body}
         # body의 person 정보를 사용하기위해 unmarshal
         - unmarshal:
             json:
               library: Jackson
-        - log: ${body}
+        - log: person= ${body}
         # body값을 header의 person에 저장
         - set-header:
             name: person
@@ -25,7 +25,7 @@
         # 소득분위를 도출하기위한 IncomBracketProcessor 호출
         - process:
             ref: incomeBracketProcessor
-        - log: ${header.incomeBracket}
+        - log: incomBracket= ${header.incomeBracket}
         # camel yaml dsl에서 사용하는 if()~else()
         - choice:
             # if 구역
@@ -108,3 +108,4 @@
         # 결과값을 만들기 위한 ResultGenerateProcessor 호출
         - process:
             ref: resultGenerateProcessor
+        - log: result= ${body}
