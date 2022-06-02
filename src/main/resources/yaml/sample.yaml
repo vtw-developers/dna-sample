@@ -1,75 +1,109 @@
 - route:
     id: sample
+    # 라우트 생성 후 자동실행
     auto-startup: true
+    # direct://sample로 producing된 것을 consuming
     from:
       uri: direct://sample
       steps:
+        # Camel exchange의 body를 logging
         - log: ${body}
+        # 입력받은 주민등록번호를 body에 넣어서 person 정보를 받아오는 api를 POST로 호출
+        # 반환값은 body에 저장 됨
         - to:
             uri: http://127.0.0.1:8090/dna/sample/persons?httpMethod=POST
+        # body의 person 정보를 사용하기위해 unmarshal
         - unmarshal:
             json:
               library: Jackson
         - log: ${body}
+        # body값을 header의 person에 저장
         - set-header:
             name: person
             simple: ${body}
+        # 소득분위를 도출하기위한 IncomBracketProcessor 호출
         - process:
             ref: incomeBracketProcessor
         - log: ${header.incomeBracket}
+        # camel yaml dsl에서 사용하는 if()~else()
         - choice:
+            # if 구역
             when:
+              # if(${header.person[gender]} == 'Female')
+              # simple을 사용하여 exchange에 등록되어있는 body나 header를 사용
               - simple: ${header.person[gender]} == 'Female'
                 steps:
                   - choice:
                       when:
+                        # if(${header.person[gender]} == 'Female')
                         - simple: ${header.person[job]} == 'self employment'
+                          # 조건이 ture일 때 steps 아래를 실행
                           steps:
+                            # Camel exchange의 header에 값 저장
                             - set-header:
                                 name: payment
                                 simple: 지원금A
+                        # if(${header.person[gender]} == 'Female')
                         - simple: ${header.incomeBracket} >= 7
+                          # 조건이 ture일 때 steps 아래를 실행
                           steps:
                             - set-header:
                                 name: payment
                                 simple: 지원금B
+                        # if(${header.person[gender]} == 'Female')
                         - simple: ${header.incomeBracket} >= 3
+                          # 조건이 ture일 때 steps 아래를 실행
                           steps:
                             - set-header:
                                 name: payment
                                 simple: 지원금C
+                      # else
                       otherwise:
+                        # 조건이 전부 false일 때 steps 아래를 실행
                         steps:
                           - set-body:
                               simple: 지원금 대상 아님
+              # if(${header.person[gender]} == 'Male')
               - simple: ${header.person[gender]} == 'Male'
+                # 조건이 전부 false일 때 steps 아래를 실행
                 steps:
                   - choice:
                       when:
+                        # if(${header.person[gender]} == 'Male')
                         - simple: ${header.person[job]} == 'self employment'
+                          # 조건이 ture일 때 steps 아래를 실행
                           steps:
                             - set-header:
                                 name: payment
                                 simple: 지원금D
+                        # if(${header.person[gender]} == 'Male')
                         - simple: ${header.incomeBracket} >= 7
+                          # 조건이 ture일 때 steps 아래를 실행
                           steps:
                             - set-header:
                                 name: payment
                                 simple: 지원금E
+                        # if(${header.person[gender]} == 'Male')
                         - simple: ${header.incomeBracket} >= 3
+                          # 조건이 ture일 때 steps 아래를 실행
                           steps:
                             - set-header:
                                 name: payment
                                 simple: 지원금F
+                      # else
                       otherwise:
+                        # 조건이 전부 false일 때 steps 아래를 실행
                         steps:
                           - set-header:
                               name: payment
                               simple: 지원금 대상 아님
+            # else
             otherwise:
+              # 조건이 전부 false일 때 steps 아래를 실행
               steps:
                 - set-header:
                     name: payment
                     simple: 지원금 대상 아님
+        # 결과값을 만들기 위한 ResultGenerateProcessor 호출
         - process:
             ref: resultGenerateProcessor

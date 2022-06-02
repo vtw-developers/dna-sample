@@ -11,17 +11,27 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+* @package : com.vtw.dna.processor
+* @name : IncomeBracketProcessor.java
+* @date : 2022-06-02
+* @author : Seungmin.bang
+* @version : 1.0.0
+* @modifyed : 연봉정보를 이용하여 소득분위를 도출하는 Processor
+**/
 @Component
-@AllArgsConstructor
 public class IncomeBracketProcessor implements Processor {
 
     @Override
     public void process(Exchange exchange) throws Exception {
+        // Camel exchange의 헤더값 중 person의 값을 획득하여 저장
         Map person = exchange.getMessage().getHeader("person", Map.class);
 
         int incomeBracket = 0;
+        // 연봉 값을 획득하여 저장
         int salary = (int) person.get("salary");
 
+        // 연봉 값에 따라 소득분위 값 도출
         if (salary >= 100000) {
             incomeBracket = 1;
         } else if (salary >= 9000) {
@@ -46,6 +56,7 @@ public class IncomeBracketProcessor implements Processor {
             incomeBracket = 10;
         }
 
+        // Camel exchange의 header에 소득분위 값을 저장
         exchange.getMessage().setHeader("incomeBracket", incomeBracket);
     }
 }
