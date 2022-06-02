@@ -35,6 +35,7 @@ public class SampleController {
     public String toDirect(@PathVariable String id) {
         // Camel exchange를 생성하여 body와 header에 주민등록번호를 셋팅하고 sample 라우트에 보냄
         Exchange exchange = producerTemplate
+                .withBody(id)
                 .withHeader("id", id)
                 .to(direct("sample")).send();
 
@@ -42,6 +43,7 @@ public class SampleController {
         Exception exception = exchange.getException();
         if (exception != null) {
             System.out.println(exception);
+            return exception.toString();
         }
 
         // Camel exchange의 body의 값을 획득하여 저장

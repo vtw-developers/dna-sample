@@ -10,6 +10,9 @@ spring:
     url: jdbc:postgresql://34.64.197.81:5432/portal
     username: vtw
     password: vtw123#
+  hikari:
+    maximum-pool-size: 20
+
   jpa:
     open-in-view: false
 

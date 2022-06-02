@@ -29,4 +29,14 @@ public class Person {
     private String job;
     private int salary;
 
+    @Override
+    public String toString() {
+        return "{" +
+                "\"id\":\"" + id + "\"" +
+                ", \"name\":\"" + name + "\"" +
+                ", \"gender\":\"" + gender + "\"" +
+                ", \"job\":\"" + job + "\"" +
+                ", \"salary\":" + salary +
+                '}';
+    }
 }

@@ -12,6 +12,7 @@
         # 반환값은 body에 저장 됨
         - to:
             uri: http://127.0.0.1:8090/dna/sample/persons?httpMethod=POST
+        - log: ${body}
         # body의 person 정보를 사용하기위해 unmarshal
         - unmarshal:
             json:

@@ -1,10 +1,13 @@
 package com.vtw.dna.person.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vtw.dna.person.Person;
 import com.vtw.dna.person.repository.PersonRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
 * @package : com.vtw.dna.person.repository
@@ -22,8 +25,9 @@ public class PersonController {
     private final PersonRepository repository;
 
     @PostMapping
-    public Person find(@RequestBody String id) {
+    public String find(@RequestBody String id) {
         Person person = repository.findById(id).get();
-        return person;
+        System.out.println(person.toString());
+        return person.toString();
     }
 }
