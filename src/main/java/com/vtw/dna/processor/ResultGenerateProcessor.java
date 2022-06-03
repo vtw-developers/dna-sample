@@ -1,6 +1,5 @@
 package com.vtw.dna.processor;
 
-import lombok.AllArgsConstructor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;

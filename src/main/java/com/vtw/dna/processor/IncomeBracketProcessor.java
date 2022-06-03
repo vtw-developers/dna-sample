@@ -1,24 +1,19 @@
 package com.vtw.dna.processor;
 
-import com.vtw.dna.person.Person;
-import lombok.AllArgsConstructor;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
-* @package : com.vtw.dna.processor
-* @name : IncomeBracketProcessor.java
-* @date : 2022-06-02
-* @author : Seungmin.bang
-* @version : 1.0.0
-* @modifyed : 연봉정보를 이용하여 소득분위를 도출하는 Processor
-**/
+ * @author : Seungmin.bang
+ * @version : 1.0.0
+ * @package : com.vtw.dna.processor
+ * @name : IncomeBracketProcessor.java
+ * @date : 2022-06-02
+ * @modifyed : 연봉정보를 이용하여 소득분위를 도출하는 Processor
+ **/
 @Component
 public class IncomeBracketProcessor implements Processor {
 

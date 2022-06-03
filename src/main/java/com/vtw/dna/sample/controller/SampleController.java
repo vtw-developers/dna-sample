@@ -1,29 +1,23 @@
 package com.vtw.dna.sample.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.camel.*;
-import org.apache.camel.spi.Resource;
-import org.apache.camel.spi.RoutesLoader;
-import org.apache.camel.support.ResourceHelper;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Set;
+import org.apache.camel.Exchange;
+import org.apache.camel.FluentProducerTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import static org.apache.camel.builder.endpoint.StaticEndpointBuilders.direct;
 
 /**
-* @package : com.vtw.dna.sample.controller
-* @name : SampleController.java
-* @date : 2022-06-02
-* @author : Seungmin.bang
-* @version : 1.0.0
-* @modifyed : sample route를 실행시키기 위한 Controller
-**/
+ * @author : Seungmin.bang
+ * @version : 1.0.0
+ * @package : com.vtw.dna.sample.controller
+ * @name : SampleController.java
+ * @date : 2022-06-02
+ * @modifyed : sample route를 실행시키기 위한 Controller
+ **/
 @RestController
 @AllArgsConstructor
 @RequestMapping("/routes")
